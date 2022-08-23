@@ -12,11 +12,13 @@
 //#define	NEOPIXEL_SK6812
 #define	NEOPIXEL_RMT_CHANNEL		RMT_CHANNEL_2
 
-static	void
-test_neopixel()
-{
 	pixel_settings_t px;
 	uint32_t		pixels[NR_LED];
+
+static	void
+intialise_neopixel()
+{
+
 	int		i;
 	int		rc;
 
@@ -58,32 +60,64 @@ test_neopixel()
 	px.brightness = 0x80;
 	np_show(&px, NEOPIXEL_RMT_CHANNEL);
 
-	int fact = 1;
-	while (1) {
-		usleep(1000*10);
-		//ESP_LOGE("main", "fact = %d", fact);
-		for	( int j = 0 ; j < NR_LED ; j ++ )	{
-			np_set_pixel_rgbw(&px, j , i, i, i, i);
+	
+
+}
+
+void red()
+{
+		for	( int j = 0 ; j < NR_LED ; j ++ )	
+		{
+			np_set_pixel_rgbw(&px, j , 255, 0, 0, 0);
 		}
 		np_show(&px, NEOPIXEL_RMT_CHANNEL);
-		if ( fact > 0 ) {
-			i += 1;
-		} else {
-			i -= 1;
-		}
-		if	( i == 255 )	{
-			fact = -1;
-		} else
-		if	( i == 0 )	{
-			fact = 1;
-		}
-	}
+	     
+}
 
+void blue()
+{
+		for	( int j = 0 ; j < NR_LED ; j ++ )	
+		{
+			np_set_pixel_rgbw(&px, j , 0, 0, 255, 0);
+		}
+		np_show(&px, NEOPIXEL_RMT_CHANNEL);
+	     
+}
+
+void green()
+{
+		for	( int j = 0 ; j < NR_LED ; j ++ )	
+		{
+			np_set_pixel_rgbw(&px, j , 0, 255, 0, 0);
+		}
+		np_show(&px, NEOPIXEL_RMT_CHANNEL);
+	     
+}
+
+void amber()
+{
+		for	( int j = 0 ; j < NR_LED ; j ++ )	
+		{
+			np_set_pixel_rgbw(&px, j , 255, 198, 0, 0);
+		}
+		np_show(&px, NEOPIXEL_RMT_CHANNEL);
+	     
 }
 
 extern	void
 app_main (void)
 {
-	test_neopixel();
+	intialise_neopixel();
+	while (1) {
+		usleep(50000*10);
+		//ESP_LOGE("main", "fact = %d", fact)
+		red();
+usleep(50000*10);
+blue();
+usleep(50000*10);
+green();
+usleep(50000*10);
+amber();
+	}
 }
 
